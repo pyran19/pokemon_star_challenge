@@ -1,0 +1,2 @@
+# pokemon_star_challenge
+スター団チャレンジにおいて強い構築の探索を行う
