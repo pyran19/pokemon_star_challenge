@@ -66,13 +66,16 @@ class TypeRelations:
         self._set_relation("くさ", "ほのお", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("くさ", "みず", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("くさ", "くさ", Effectiveness.NOT_VERY_EFFECTIVE)
+        self._set_relation("くさ", "どく", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("くさ", "じめん", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("くさ", "ひこう", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("くさ", "むし", Effectiveness.NOT_VERY_EFFECTIVE)
+        self._set_relation("くさ", "いわ", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("くさ", "ドラゴン", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("くさ", "はがね", Effectiveness.NOT_VERY_EFFECTIVE)
 
         # こおり
+        self._set_relation("こおり", "ほのお", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("こおり", "みず", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("こおり", "くさ", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("こおり", "こおり", Effectiveness.NOT_VERY_EFFECTIVE)
@@ -90,6 +93,7 @@ class TypeRelations:
         self._set_relation("かくとう", "むし", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("かくとう", "いわ", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("かくとう", "ゴースト", Effectiveness.NO_EFFECT)
+        self._set_relation("かくとう", "あく", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("かくとう", "はがね", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("かくとう", "フェアリー", Effectiveness.NOT_VERY_EFFECTIVE)
 
@@ -124,8 +128,8 @@ class TypeRelations:
         self._set_relation("エスパー", "かくとう", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("エスパー", "どく", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("エスパー", "エスパー", Effectiveness.NOT_VERY_EFFECTIVE)
-        self._set_relation("エスパー", "はがね", Effectiveness.NO_EFFECT)
-        self._set_relation("エスパー", "あく", Effectiveness.NOT_VERY_EFFECTIVE)
+        self._set_relation("エスパー", "はがね", Effectiveness.NOT_VERY_EFFECTIVE)
+        self._set_relation("エスパー", "あく", Effectiveness.NO_EFFECT)
 
         # むし
         self._set_relation("むし", "ほのお", Effectiveness.NOT_VERY_EFFECTIVE)
@@ -167,15 +171,16 @@ class TypeRelations:
         self._set_relation("あく", "フェアリー", Effectiveness.NOT_VERY_EFFECTIVE)
 
         # はがね
-        self._set_relation("はがね", "ノーマル", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("はがね", "ほのお", Effectiveness.NOT_VERY_EFFECTIVE)
-        self._set_relation("はがね", "くさ", Effectiveness.SUPER_EFFECTIVE)
+        self._set_relation("はがね", "みず", Effectiveness.NOT_VERY_EFFECTIVE)
+        self._set_relation("はがね", "でんき", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("はがね", "こおり", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("はがね", "いわ", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("はがね", "はがね", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("はがね", "フェアリー", Effectiveness.SUPER_EFFECTIVE)
 
         # フェアリー
+        self._set_relation("フェアリー", "ほのお", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("フェアリー", "かくとう", Effectiveness.SUPER_EFFECTIVE)
         self._set_relation("フェアリー", "どく", Effectiveness.NOT_VERY_EFFECTIVE)
         self._set_relation("フェアリー", "ドラゴン", Effectiveness.SUPER_EFFECTIVE)
@@ -219,15 +224,40 @@ class TypeRelations:
 
         return self.matrix
 
+    def get_effectiveness_value(self, attacker: str, defender: str) -> float:
+        """
+        タイプ相性を数値で返す
+        
+        Args:
+            attacker (str): 攻撃側のタイプ
+            defender (str): 防御側のタイプ
+        
+        Returns:
+            float: 効果抜群: 2.0, 効果今ひとつ: 0.5, 効果なし: 0.0, 通常: 1.0
+        """
+        effectiveness_values = {
+            Effectiveness.SUPER_EFFECTIVE: 2.0,
+            Effectiveness.NOT_VERY_EFFECTIVE: 0.5,
+            Effectiveness.NO_EFFECT: 0.0,
+            Effectiveness.NORMAL: 1.0
+        }
+        return effectiveness_values[self.get_effectiveness(attacker, defender)]
+
+type_relations = TypeRelations()
+
 # 使用例
 def main():
-    type_relations = TypeRelations()
-
     # タイプ相性の例を表示
     test_cases = [
         ("ゴースト", "ノーマル"),
         ("ほのお", "くさ"),
-        ("みず", "ほのお")
+        ("みず", "ほのお"),
+        ("かくとう", "あく"),
+        ("かくとう", "はがね"),
+        ("あく", "かくとう"),
+        ("はがね", "かくとう"),
+        ("あく", "ゴースト"),
+        ("はがね", "ゴースト")
     ]
     
     for attacker, defender in test_cases:

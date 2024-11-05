@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "star_challenge"
+version = "0.0.1"
+description = "スター団チャレンジ用構築評価プログラム"
+requires-python = ">=3.8"
+dependencies = [
+    "numpy",
+    "pandas",
+    "pulp",
+    "pytest",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "src"
+]
+testpaths = [
+    "tests"
+]
