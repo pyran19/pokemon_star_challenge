@@ -5,7 +5,7 @@ from pool import Pool
 def get_pool():
     pool = Pool()
     pool.read_csv("input/pool.csv")
-    pool.load_relation("input/relation_0_3.csv")
+    pool.load_relation("input/relation.csv")
     return pool
 
 def main(my_team,op_team):
