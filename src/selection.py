@@ -7,7 +7,7 @@ class Game:
         self.A=A
         self.my_pokemon=my_pokemon
         self.opponent_pokemon=opponent_pokemon
-        self.nPT=len(my_pokemon)
+        self.nPT=len(self.A)
     def play(self, my_required_index=None, op_required_index=None):
         lp = pulp.LpProblem(sense=pulp.LpMaximize)
         v = pulp.LpVariable("v") 

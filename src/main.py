@@ -15,12 +15,12 @@ def main(my_team,op_team):
     
     game = Game(A,my_team,op_team)
     game.play(my_required_index=0,op_required_index=0)
-    result = game.get_result()
-    game.print_result()
+    return game
 
 if __name__ == "__main__":
-    my_team = ["ブロロローム","プクリン","オコリザル","ウインディ","コノヨザル","ワルビアル"]
-    op_team = ["ブロロローム","プクリン","マリルリ","ウインディ","コノヨザル","ワルビアル"]
-    main(my_team,op_team)
+    my_team = ["ブロロローム","ドンカラス","マリルリ","ヘルガー","コノヨザル","ワルビアル"]
+    op_team = ["ブロロローム","コノヨザル","ドンカラス","ノクタス","マリルリ","ワルビアル"]
+    game = main(my_team,op_team)
+    game.print_result()
 
 
